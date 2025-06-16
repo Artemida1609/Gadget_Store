@@ -1,21 +1,46 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
+// import 'swiper/css';
+import { SideBar } from './components/SideBar/SideBar';
+import classNames from 'classnames';
+import { Outlet } from 'react-router-dom';
 
-interface Props {
-  onClick: () => void;
-  children: React.ReactNode;
-}
+export const App = () => {
+  const [activeAside, setActiveAside] = useState(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [disabledIds, setDisabledIds] = useState<number[]>([0, 2, 5]);
 
-export const Provider: React.FC<Props> = React.memo(({ onClick, children }) => (
-  <button type="button" onClick={onClick}>
-    {children}
-  </button>
-));
+  useEffect(() => {
+    const body = document.body;
 
-export const App: React.FC = () => {
+    if (activeAside) {
+      body.style.overflowY = 'hidden';
+      body.style.height = '100vh';
+    } else {
+      body.style.overflowY = 'none';
+      body.style.height = 'auto';
+    }
+  }, [activeAside]);
+
   return (
-    <div className="starter">
-      <Provider onClick={() => ({})}>TodoList</Provider>
-    </div>
+    <main className="App">
+      <div
+        className={classNames('SideBar', {
+          activeSideBar: activeAside,
+          inactiveSideBar: !activeAside,
+        })}
+      >
+        <SideBar setActiveAside={setActiveAside} />
+      </div>
+      <Outlet
+        context={{
+          setActiveAside,
+          width,
+          setWidth,
+          disabledIds,
+          setDisabledIds,
+        }}
+      />
+    </main>
   );
 };
