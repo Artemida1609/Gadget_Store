@@ -39,3 +39,8 @@ Features
   > Sticky Header: Keeps the header visible as you scroll.
   > Scroll to Top Button: Easily return to the top of the page.
   > Loader: Indicates loading status for a better user experience.
+
+How to launch the project:
+  1. Run in terminal "npm i"
+  2. Then run "npm start"
+  3. Here you go, you have project ready to play in browser
